@@ -1,0 +1,8 @@
+       |00| SET R0 , 0x05
+       |02| SET R2 , 0x00
+subrut |04| CMP R0 , R2
+       |06| JZ halt
+       |08| ADD R1 , R0
+       |0a| DEC R0
+       |0c| JMP subrut
+  halt |0e| JMP halt
