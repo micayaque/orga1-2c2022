@@ -1,0 +1,20 @@
+SET 	R1, 0x03 ; el registro R1 guarde el valor 0x03
+SET 	R2, 0x00 ; R2 guarde el valor 0x00
+SET 	R3, rai  ;  R3 la dirección a la rutina de atención a la interrupción
+STR 	[0x00], R3 ; R2 ← R3
+STI ; se prende el flag I para habilitar recibir interrupciones
+
+loop:
+CMP R1, R2 ; modifica los flags según los valores que tome R1-R2
+JZ fin ; como R2 es cero, la resta anterior no va a ser 0 por lo que no se ejecuta el salto
+JMP loop ; se salta a la etiqueta loop y como los valores en los registros no cambian entramos en un loop 
+
+fin:
+CLI ; deshabilita la llegada de interrupciones
+
+halt:
+JMP halt ; salta a la etiqueta halt (¿no existe?) pero esto nunca va a suceder por el loop infinito
+
+rai:
+DEC R1 ; decrementa el valor en R1
+IRET ; vuelve a la instrucción que debería ejecutarse luego de ejecutar la interrupción
